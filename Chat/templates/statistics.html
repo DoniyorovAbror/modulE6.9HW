@@ -1,0 +1,21 @@
+{% extends 'default.html' %}
+
+{% block title %}Статистика{% endblock title %}
+
+{% block content %}
+<div class="container">
+<div class="row text-light text-center">
+    <h2>   
+        общие количество комнат - {{rooms}}
+    </h2>
+    <h2>   
+        общие количество пользователей - {{members}}
+    </h2>
+    <h2>   
+        общие количество сообщенний - {{messages}}
+    </h2>
+</div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends 'default.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Чат комнаты {% endblock title %}
+
+    
+
+{% block content %}
+
+{% if contents %}
+<h3 class="text-center mt-4 text-light">Чат - комнаты</h3>
+<div class="text-center">
+   <a href='/' class="btn btn-outline-primary">Назад</a>
+</div>
+
+<table class="table table-dark align-middle table-ms mt-2 w-75 mt-4 chat_rooms">
+   {% for room in contents %}
+      <tr class="">
+         
+         <td class="text-light ps-3 w-75 fs-3 ">
+            {{room.name}} <br>
+            <span class='fs-6'>Админ - {{room.author.username}}</span>
+         </td>
+         {% if room.id in members %}
+            {% if request.user.id == room.author.id %}
+               <td><a href={% url 'OutFromRoom' room.id %} class='btn btn-outline-secondary w-100 disabled' id='out_from_room'>Отключиться</a></td>
+            {% else %}
+               <td><a href={% url 'OutFromRoom' room.id %} class='btn btn-outline-success w-100' id='out_from_room'>Отключиться</a></td>
+            {% endif %}
+            <td><a href={% url 'chat_room' room.id %} class='btn btn-outline-success'>Войти</a></td>
+         {% else %}
+            <td><a href={% url 'JoinToRoom' room.id %} class='btn btn-outline-success' id='join_to_room'>Подключиться</a></td>
+            <td><a href={% url 'chat_room' room.id %} class='btn btn-outline-secondary disabled'>Войти</a></td>
+         {% endif %}
+         {% if room.author_id == request.user.id%}
+            <td class="text-end pe-3"> <a href={% url 'edit_room' room.id %} class="btn btn-outline-primary">Изменить</a></td>
+            <td class="text-end pe-3"> <a href={% url 'edit_room' room.id %} class="btn btn-outline-danger ">Удалить</a></td>
+         {% else %}
+            <td></td>
+            <td class="text-end pe-3"> <a class="btn btn-outline-secondary disabled">Удалить</a></td>
+         {% endif %}
+      </tr>
+   {% endfor %}
+</table>
+
+{% else %}
+<div class="text-center text-light">
+   <h3> Нет Чат-комнат</h3>
+   <a href='/' class="btn btn-outline-primary">Назад</a>
+</div>
+{% endif %}
+
+
+{% endblock content %}

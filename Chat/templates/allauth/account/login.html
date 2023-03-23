@@ -1,0 +1,30 @@
+
+{% load static %}
+{% block custom_styles %}
+<link rel="stylesheet" href={% static 'css/reg_form.css' %}>
+{% endblock custom_styles %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+<div class="background">
+   <div class="shape"></div>
+   <div class="shape"></div>
+</div>
+<form class="login" method="POST" action="{% url 'account_login' %}">
+   <h3>Messenger</h3>
+
+   {% csrf_token %}
+   <label for="username">Имя пользователя</label>
+   {{form.login}}
+
+   <label for="password">Пароль</label>
+   {{form.password}}
+
+   {% comment %} {{form.as_p}} {% endcomment %}
+
+   {% if redirect_field_value %}
+   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+   {% endif %}
+   <button type='submit'>Войти</button>
+
+</form>
+{% endblock content %}

@@ -1,0 +1,10 @@
+{% extends 'default.html' %} 
+{% load static %}
+{% block title %}Messenger{% endblock title %}
+{% block content %}
+<div class="container text-center">
+
+<a href= {% url 'create_room' %} class="btn btn-outline-primary btn-lg">Создать комнату</a>
+<a href= {% url 'chat_rooms'%} class="btn btn-outline-primary btn-lg">Переход комнатам</a>
+</div>
+{% endblock content %}

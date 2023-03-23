@@ -1,0 +1,27 @@
+{% extends 'default.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{% endblock title %}
+
+
+{% block content %}
+
+<form action= {% url 'chat_rooms' %}>
+    {% csrf_token %}
+    {{ form.name|as_crispy_field }}
+    
+    <button type="submit" id='edit_room' class="btn btn-outline-primary js-btn">Сохранить</button>
+    <button type="submit" id='delete_room' class="btn btn-outline-danger js-btn">Удалить</button>
+
+</form>
+
+    {{ room_id|json_script:'room_id'}}
+
+{% endblock content %}
+
+{% block scripts %}
+    <script src={% static 'js/room_edit_delete.js' %}></script>
+{% endblock scripts %}
+

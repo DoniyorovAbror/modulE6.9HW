@@ -1,0 +1,82 @@
+{% extends 'default.html' %}
+{% load static %}
+{% block title %} {{ chat_room.name }} {% endblock title %}
+{% block content %}
+
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-6">
+                <a href={% url 'chat_rooms' %} class='btn btn-outline-success'>Назад</a>
+            </div>
+            <div class="col-6"></div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-4">
+
+                <div class="list-group mt-3">
+                    {% for key, value in members %}
+                    {% if key.username == request.user.username %}
+                        <button class="list-group-item text-bg-dark list-group-item-action mb-2">
+                    {% else %}
+                        <button class="list-group-item text-bg-dark list-group-item-action mb-2 js_get-username">
+                    {% endif %}
+                        <img src="{{media}}{{ value.avatar}}" alt="avatar">
+                        
+                        <span class="ms-2">{{ key.username }}</span>
+                        
+                    </button>
+                    {% endfor %}
+                </div>
+                
+                
+            </div>
+            <div class="col-8">
+                
+                    <div class="form-group mt-2 p-3">
+                        <div id="chat-text">
+                            <div class="container">
+                                {% for message in messages %}
+                                <div class='row'>
+                                    {% if message.message_sender.id == request.user.id %}
+                                    <div class=' offset-md-8 col-md-4 mb-2 me-2'>
+                                        <div class='p-2 rounded text-bg-dark'>
+                                        <p class='float-end me-3'>{{ message.message_sender }}</p> <br>
+                                        <hr>
+                                            <p>{{message.message }}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    {% else %}
+                                    <div class='col-md-4 mb-2 ms-2'>
+                                        <div class='p-2 rounded text-bg-secondary'>
+                                            <p>{{ message.message_sender }}</p> 
+                                            <hr>
+                                            {{message.message }}
+                                        </div>
+                                    </div>
+                                    
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-chat">
+                        <input class="message-input " placeholder="Сообщение" id="input" type="text"></br>
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block" id="submit" type="button">Отрпавить</button>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    {{ request.user.username|json_script:"user_username" }}
+    {{ chat_room.id|json_script:'room'}}
+
+    <script src={% static 'js/bootstrap.min.js' %}></script>
+    <script src={% static 'js/chat.js' %}></script>
+    
+{% endblock content %}

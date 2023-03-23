@@ -1,0 +1,33 @@
+ {% comment %} {% extends 'default.html' %}  {% endcomment %}
+ {% load static %}
+ {% block custom_styles %}
+ <link rel="stylesheet" href={% static 'css/reg_form.css' %}>
+ {% endblock custom_styles %}
+
+
+ {% block title %}Registration{% endblock title %}
+ {% block content %}
+
+ <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+    {% csrf_token %}
+    <h3>Messenger</h3>
+
+    <label for="username">Имя пользователя</label>
+    {{ form.username }}
+
+    <label for="password">Пароль</label>
+    {{form.password1}}
+
+    <label for="password2">Повторите пароль</label>
+    {{form.password2}}
+
+    {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <button type='submit'>Регистрация</button>
+</form>
+{% endblock content %}

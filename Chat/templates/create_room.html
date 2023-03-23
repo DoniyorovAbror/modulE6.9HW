@@ -1,0 +1,21 @@
+{% extends 'default.html' %}
+{% load static %}
+{% block title %}
+Создать комнату
+{% endblock  %}
+
+{% block content %}
+<form action="/">
+    {% csrf_token %}
+    <label class="text-light"> Имя комнаты
+    {{ form.name }}
+    </label>
+    <button type="submit" class="btn btn-outline-primary js-btn">Записать</button>
+</form>
+{{ request.user.account.id|json_script:"user_id"}}
+
+{% endblock content %}
+
+{% block scripts %}
+<script src={% static 'js/creater_room.js' %}></script>
+{% endblock scripts %}
